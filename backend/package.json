@@ -10,12 +10,12 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-
-    "dotenv": "^17.2.1",
-
     "bcrypt": "^6.0.0",
-
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.1",
     "express": "^5.1.0",
+    "mogoose": "^0.0.1-security",
     "mongoose": "^8.17.0"
   }
 }
