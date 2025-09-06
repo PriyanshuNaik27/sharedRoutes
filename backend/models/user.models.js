@@ -3,7 +3,7 @@ import bcyrpt from "bcrypt"
 
 const userSchema= new mongoose.Schema(
     {
-       name: {
+       userName: {
         type:String,
         required:true,
         lowercase:true
