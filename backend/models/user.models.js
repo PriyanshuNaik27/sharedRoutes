@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import bcyrpt from "bcrypt";
 const userSchema= new mongoose.Schema(
     {
-       name: {
+       userName: {
         type:String,
         required:true,
         lowercase:true
@@ -17,7 +17,6 @@ const userSchema= new mongoose.Schema(
         required:true,
         type:String,
        }
-
     }
  ,{timestamps:true});
  //hash the password before saving and before saving check if the passwrod is modified or not;
@@ -33,7 +32,6 @@ userSchema.pre("save", async function(next){
       next(error);
    }
 });
-//method to see if the password is correct or not
 userSchema.methods.isPasswordCorrect() = async function(password){
    return await bcyrpt.compare(password,this.password);
 }
