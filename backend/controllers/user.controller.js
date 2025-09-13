@@ -3,6 +3,25 @@ import { User } from "../models/user.models";
 import bcrypt from "bcrypt";
 
 
+
+const generateAcessAndRefreshToken = async(userId)=>{
+  try{
+    const user = await User.findById(userId);
+    const accessToken = user.generateAcessToken();
+    const refreshToken = user.generateRefreshToken();
+    user.refreshToken = refreshToken;
+    // user.save();  we dont use this as we are not passing password which is required field in model
+    await user.save({ validateBeforeSave: false });
+    return { refreshToken, accessToken };
+  }
+  catch (error) {
+    console.error(error.message);
+    return res.status(500).json({
+      message : error.message
+    })
+  }
+}
+
 export const registerUser = async (req, res) => {
   //signup
 
@@ -30,9 +49,10 @@ export const registerUser = async (req, res) => {
       message: "invalid input fields - error in registerUser",
     });
   } else {
-    const { email, password, userName } = req.body;
+    try{
+      const { email, password, userName } = req.body;
 
-    const existedUser = User.findOne(email);
+    const existedUser = User.findOne({email});
     if (existedUser) {
       return res.json({
         status: 404,
@@ -45,8 +65,14 @@ export const registerUser = async (req, res) => {
       email: email,
       password: password,
     });
+    }
 
-    // check if user is created or not
+    catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+
+    
   }
 };
 
@@ -63,8 +89,37 @@ export const loginUser = async (req, res) => {
     if (!isMatch) {
       return res.status(401).json({ message: "Invalid email or password" });
     }
-    const { password: _, ...userWithoutPassword } = user.toObject();
-    res.status(200).json({ user: userWithoutPassword });
+    
+
+    const { refreshToken, accessToken } = await generateAcessAndRefreshToken(
+    user._id
+    );
+
+    const loggedInUser = await User.findById(user._id).select(
+    "-password -refreshToken"
+  );
+
+   
+  //for cookies - to not make it modifly by frontend
+  const options = {
+    httpOnly: true,
+    secure: true,
+  };
+
+  return res
+    .status(200)
+    .cookie("accesToken", accessToken, options)
+    .cookie("refreshToken", refreshToken, options)
+    .json(
+      {
+          user: loggedInUser,
+          accessToken,
+          refreshToken,
+        
+        mesage: "user logged in succesfulyy"
+      }
+      )
+    ;
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
