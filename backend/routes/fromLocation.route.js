@@ -3,7 +3,7 @@ import verifyJWT from "../middlewares/auth.middleware.js"
 
 const router = Router();
 
-router.post("/:locationSlug",verifyJWT,addNewLocation);
+router.post("/",verifyJWT,addNewLocation);
 
 router.get("/getRandomLocation")// to display at dashboard 
 

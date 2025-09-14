@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 const locationSchema= new mongoose.Schema(
     {
-       address: {
+       locationName: {
         type:String,
         required:true,
         lowercase:true
@@ -9,6 +9,11 @@ const locationSchema= new mongoose.Schema(
       uploadedBy:{
         type:mongoose.Schema.types.ObjectId,
         ref:"User",
+      },
+      locationSlug:{
+        type:String,
+        required:true,
+        unique:true,
       }
     }
  ,{timestamps:true});
