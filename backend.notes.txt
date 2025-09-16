@@ -1,0 +1,15 @@
+# Auth Notes
+
+- Tokens can be sent in 2 ways:
+  1. In JSON (frontend stores in localStorage → XSS risk).
+  2. In httpOnly cookies (browser auto-sends → safer for web).
+
+- In my project:
+  - loginUser sets both cookies and returns tokens in JSON.
+  - verifyJWT checks token from cookies OR Authorization header.
+  - If I want pure cookie-based auth → remove tokens from JSON response.
+
+- Remember:
+  - Cookies only get stored after response is sent.
+  - Use httpOnly + secure + sameSite.
+  - No need to expose tokens in JSON if relying on cookies.

@@ -2,10 +2,8 @@ import { z } from "zod";
 import { User } from "../models/user.models";
 import bcrypt from "bcrypt";
 
-
-
-const generateAcessAndRefreshToken = async(userId)=>{
-  try{
+const generateAcessAndRefreshToken = async (userId) => {
+  try {
     const user = await User.findById(userId);
     const accessToken = user.generateAcessToken();
     const refreshToken = user.generateRefreshToken();
@@ -13,14 +11,13 @@ const generateAcessAndRefreshToken = async(userId)=>{
     // user.save();  we dont use this as we are not passing password which is required field in model
     await user.save({ validateBeforeSave: false });
     return { refreshToken, accessToken };
-  }
-  catch (error) {
+  } catch (error) {
     console.error(error.message);
     return res.status(500).json({
-      message : error.message
-    })
+      message: error.message,
+    });
   }
-}
+};
 
 export const registerUser = async (req, res) => {
   //signup
@@ -49,34 +46,53 @@ export const registerUser = async (req, res) => {
       message: "invalid input fields - error in registerUser",
     });
   } else {
-    try{
+    try {
       const { email, password, userName } = req.body;
 
-    const existedUser = User.findOne({email});
-    if (existedUser) {
-      return res.json({
-        status: 404,
-        message: "user is already exits",
+      const existedUser = User.findOne({ email });
+      if (existedUser) {
+        return res.json({
+          status: 404,
+          message: "user is already exits",
+        });
+      }
+
+      const user = await User.create({
+        userName: userName.toLowerCase(),
+        email: email,
+        password: password,
       });
+      const { refreshToken, accessToken } = await generateAcessAndRefreshToken(
+        user._id
+      );
+
+      const loggedInUser = await User.findById(user._id).select(
+        "-password -refreshToken"
+      );
+
+      //for cookies - to not make it modifly by frontend
+      const options = {
+        httpOnly: true,
+        secure: true,
+      };
+
+      return res
+        .status(200)
+        .cookie("accessToken", accessToken, options)
+        .cookie("refreshToken", refreshToken, options)
+        .json({
+          user: loggedInUser,
+          accessToken,
+          refreshToken,
+
+          mesage: "user registered  succesfulyy",
+        });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Internal server error" });
     }
-
-    const user = await User.create({
-      userName: userName.toLowerCase(),
-      email: email,
-      password: password,
-    });
-    }
-
-    catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Internal server error" });
-  }
-
-    
   }
 };
-
-
 
 export const loginUser = async (req, res) => {
   const { email, password } = req.body;
@@ -89,40 +105,34 @@ export const loginUser = async (req, res) => {
     if (!isMatch) {
       return res.status(401).json({ message: "Invalid email or password" });
     }
-    
 
     const { refreshToken, accessToken } = await generateAcessAndRefreshToken(
-    user._id
+      user._id
     );
 
     const loggedInUser = await User.findById(user._id).select(
-    "-password -refreshToken"
-  );
+      "-password -refreshToken"
+    );
 
-   
-  //for cookies - to not make it modifly by frontend
-  const options = {
-    httpOnly: true,
-    secure: true,
-  };
+    //for cookies - to not make it modifly by frontend
+    const options = {
+      httpOnly: true,
+      secure: true,
+    };
 
-  return res
-    .status(200)
-    .cookie("accesToken", accessToken, options)
-    .cookie("refreshToken", refreshToken, options)
-    .json(
-      {
-          user: loggedInUser,
-          accessToken,
-          refreshToken,
-        
-        mesage: "user logged in succesfulyy"
-      }
-      )
-    ;
+    return res
+      .status(200)
+      .cookie("accessToken", accessToken, options)
+      .cookie("refreshToken", refreshToken, options)
+      .json({
+        user: loggedInUser,
+        accessToken,
+        refreshToken,
+
+        mesage: "user logged in succesfulyy",
+      });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
-
