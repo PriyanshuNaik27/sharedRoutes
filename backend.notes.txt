@@ -13,3 +13,6 @@
   - Cookies only get stored after response is sent.
   - Use httpOnly + secure + sameSite.
   - No need to expose tokens in JSON if relying on cookies.
+
+
+//NOTE , i have written accesstoken and refres token in return for register fir degugging , remove it later
