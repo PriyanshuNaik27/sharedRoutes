@@ -1,0 +1,12 @@
+FromLocation.find({locationSlug});
+find() returns an array ,not null/undefined
+
+if(await FromLocation.find({locationSlug}))
+
+
+find() returns an array, not null/undefined.
+
+This will always be truthy, even if empty.
+✅ Use findOne() instead.
+
+................................................
