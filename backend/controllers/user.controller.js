@@ -1,21 +1,19 @@
 import { z } from "zod";
-import { User } from "../models/user.models";
+import { User } from "../models/user.model.js";
 import bcrypt from "bcrypt";
 
-const generateAcessAndRefreshToken = async (userId) => {
+const generateAccessAndRefreshToken = async (userId) => {
   try {
     const user = await User.findById(userId);
-    const accessToken = user.generateAcessToken();
+    const accessToken = user.generateAccessToken();
     const refreshToken = user.generateRefreshToken();
     user.refreshToken = refreshToken;
     // user.save();  we dont use this as we are not passing password which is required field in model
     await user.save({ validateBeforeSave: false });
     return { refreshToken, accessToken };
   } catch (error) {
-    console.error(error.message);
-    return res.status(500).json({
-      message: error.message,
-    });
+    console.error("error in token gen " ,error.message);
+    throw error;
   }
 };
 
@@ -33,9 +31,9 @@ export const registerUser = async (req, res) => {
 
 */
   const requireBody = z.object({
-    email: z.email().min(3).max(100),
-    password: z.string().min(1).max(50),
-    userName: z.string().min(5).max(50),
+    email: z.string().email({ message: "Invalid email format" }).min(3, { message: "Email is too short" }).max(100, { message: "Email is too long" }),
+    password: z.string().min(1, { message: "Password is required" }).max(50, { message: "Password is too long" }),
+    userName: z.string().min(5, { message: "Username must be at least 5 characters" }).max(50, { message: "Username is too long" }),
   });
 
   const parsedData = requireBody.safeParse(req.body);
@@ -43,14 +41,18 @@ export const registerUser = async (req, res) => {
   if (!parsedData.success) {
     return res.json({
       status: 400,
-      message: "invalid input fields - error in registerUser",
+      errors: parsedData.error.issues.map((err) => ({
+        field: err.path[0],
+        message: err.message,
+      })),
     });
   } else {
     try {
       const { email, password, userName } = req.body;
 
-      const existedUser = User.findOne({ email });
+      const existedUser = await User.findOne( {email} );
       if (existedUser) {
+        console.error("user exits")
         return res.json({
           status: 404,
           message: "user is already exits",
@@ -62,7 +64,7 @@ export const registerUser = async (req, res) => {
         email: email,
         password: password,
       });
-      const { refreshToken, accessToken } = await generateAcessAndRefreshToken(
+      const { refreshToken, accessToken } = await generateAccessAndRefreshToken(
         user._id
       );
 
@@ -106,7 +108,7 @@ export const loginUser = async (req, res) => {
       return res.status(401).json({ message: "Invalid email or password" });
     }
 
-    const { refreshToken, accessToken } = await generateAcessAndRefreshToken(
+    const { refreshToken, accessToken } = await generateAccessAndRefreshToken(
       user._id
     );
 

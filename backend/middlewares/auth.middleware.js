@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken"
-import { User } from "../models/user.models"
+import { User } from "../models/user.model.js"
 
 /* 
 take username from req.body

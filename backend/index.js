@@ -9,7 +9,7 @@ import app from  "./app.js";
 import connect from "./config/db.js";
 
 
-const PORT=process.env.PORT || 3000;
+const PORT=process.env.PORT || 8000;
 
 connect()
 .then(()=>{
