@@ -1,4 +1,4 @@
-import mongoose, { Mongoose, Schema } from "mongoose";
+import mongoose from "mongoose";
 
 const toPlacesSchema =  new mongoose.Schema({
     placeName : {
@@ -10,6 +10,10 @@ const toPlacesSchema =  new mongoose.Schema({
         ref:"FromLocation",
         required: true
     },
+    placeSlug :{
+        type:String,
+        required:true
+    },
     addedBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
@@ -18,4 +22,4 @@ const toPlacesSchema =  new mongoose.Schema({
 
 }, { timestamps: true });
 
- export default mongoose.model("ToPlaces",toPlacesSchema)
+ export const toPlaces=   mongoose.model("ToPlaces",toPlacesSchema)

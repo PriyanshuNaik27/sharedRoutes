@@ -10,5 +10,8 @@ import userRouter from "./routes/user.route.js";
 app.use("/api/v1/user",userRouter);
 
 
+import fromLocationRouter from "./routes/fromLocation.route.js";
+app.use("/api/v1/fromLocation",fromLocationRouter);
+
 
 export default app;

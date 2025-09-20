@@ -7,7 +7,7 @@ const locationSchema= new mongoose.Schema(
         lowercase:true
        },
       uploadedBy:{
-        type:mongoose.Schema.types.ObjectId,
+        type:mongoose.Schema.Types.ObjectId,
         ref:"User",
       },
       locationSlug:{
