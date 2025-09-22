@@ -33,7 +33,7 @@ export const addNewLocation = async (req, res) => {
 
     return res.status(201).json({
       message: "Location created successfully",
-      location: newLocation,
+      data: newLocation,
     });
   } catch (err) {
     res.status(500).json({

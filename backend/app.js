@@ -13,5 +13,8 @@ app.use("/api/v1/user",userRouter);
 import fromLocationRouter from "./routes/fromLocation.route.js";
 app.use("/api/v1/fromLocation",fromLocationRouter);
 
+import toPlaceRouter from "./routes/toPlaces.route.js";
+app.use("/api/v1/fromLocation",toPlaceRouter);
+
 
 export default app;
