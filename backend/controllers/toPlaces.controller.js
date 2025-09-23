@@ -65,7 +65,7 @@ export const addPlaceToLocation = async(req,res)=>{
         const place  = await toPlaces.create({
             placeName,
             placeSlug,
-            fromLocation:locationId,
+            fromLocation:location._id,
             addedBy:userId
         })
 
