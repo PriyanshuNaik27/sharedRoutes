@@ -129,7 +129,8 @@ export const loginUser = async (req, res) => {
     //for cookies - to not make it modifly by frontend
     const options = {
       httpOnly: true,
-      secure: true,
+      // secure: true,
+      secure : false
     };
 
     return res
@@ -166,7 +167,8 @@ export const logoutUser = async (req, res) => {
 
     const options = {
       httpOnly: true,
-      secure: true,
+      // secure: true,
+      secure : false,
     };
     return res
       .status(200)
