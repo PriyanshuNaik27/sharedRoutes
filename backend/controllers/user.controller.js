@@ -42,7 +42,7 @@ export const registerUser = async (req, res) => {
       .max(50, { message: "Password is too long" }),
     userName: z
       .string()
-      .min(5, { message: "Username must be at least 5 characters" })
+      .min(1, { message: "Username must be at least 5 characters" })
       .max(50, { message: "Username is too long" }),
   });
 
