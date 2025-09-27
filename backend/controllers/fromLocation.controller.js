@@ -5,6 +5,15 @@ export const addNewLocation = async (req, res) => {
   try {
     const { locationName } = req.body;
 
+
+    /*/\s/g is a regular expression:
+    \s matches any whitespace character (spaces, tabs, newlines, etc.).
+    g is the "global" flag, ensuring that all occurrences of whitespace are replaced, not just the first one. */
+
+
+    locationSlug= locationName.toLowerCase().replace(/\s/g, '');
+
+    
     //this is from where i used slugify
     //https://www.npmjs.com/package/slugify?activeTab=readme
 
@@ -46,7 +55,7 @@ export const addNewLocation = async (req, res) => {
 
 export const recentLocation = async(req,res)=>{
   try{
-    const recentLocations = await FromLocation.find().sort({createdAt:-1}).limit(5);
+    const recentLocations = await FromLocation.find().sort({createdAt:-1});
     // console.log(recentLocations.length);
     
     return res.status(201).json({

@@ -4,7 +4,7 @@ import axios from "axios";
 
 export default function AddPlace() {
   const [placeName, setPlaceName] = useState("");
-  const [locationSlug, setLocationSlug] = useState("");
+  const [normalizedName, setNormalizedName] = useState(""); // was locationSlug
   const [locations, setLocations] = useState([]);
   const [message, setMessage] = useState("");
 
@@ -12,7 +12,9 @@ export default function AddPlace() {
     // fetch all locations for dropdown
     const fetchLocations = async () => {
       try {
-        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/fromLocation`);
+        const res = await axios.get(
+          `${import.meta.env.VITE_BACKEND_URL}/api/v1/fromLocation`
+        );
         setLocations(res.data.data || []);
       } catch (err) {
         console.error("Error fetching locations");
@@ -27,7 +29,7 @@ export default function AddPlace() {
 
     try {
       const res = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/api/v1/fromLocation/${locationSlug}/places`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/fromLocation/${normalizedName}/places`,
         { placeName },
         {
           headers: {
@@ -48,13 +50,13 @@ export default function AddPlace() {
       <h2>Add New Place</h2>
       <form onSubmit={handleSubmit}>
         <select
-          value={locationSlug}
-          onChange={(e) => setLocationSlug(e.target.value)}
+          value={normalizedName}
+          onChange={(e) => setNormalizedName(e.target.value)}
           required
         >
           <option value="">Select Location</option>
           {locations.map((loc) => (
-            <option key={loc._id} value={loc.locationSlug}>
+            <option key={loc._id} value={loc.normalizedName}>
               {loc.locationName}
             </option>
           ))}

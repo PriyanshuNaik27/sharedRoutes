@@ -22,4 +22,9 @@ const toPlacesSchema =  new mongoose.Schema({
 
 }, { timestamps: true });
 
+//// ✅ Add compound unique index here
+// learn about this and than addd this ,  i dont know whhat index does right now , will look and then add
+//  toPlacesSchema.index({ placeSlug: 1, fromLocation: 1 }, { unique: true });
+
+
  export const toPlaces=   mongoose.model("ToPlaces",toPlacesSchema)

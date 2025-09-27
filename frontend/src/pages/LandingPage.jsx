@@ -8,7 +8,11 @@ export default function LandingPage() {
   const handleSearch = (e) => {
     e.preventDefault();
     if (!search) return;
-    navigate(`/location/${search}`);
+
+    // normalize input: lowercase + remove spaces
+    const normalized = search.toLowerCase().replace(/\s+/g, '');
+    console.log("Navigating to:", `/location/${normalized}`);
+    navigate(`/location/${normalized}`);
   };
 
   return (
