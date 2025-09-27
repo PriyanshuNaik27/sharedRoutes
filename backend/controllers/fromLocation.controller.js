@@ -44,3 +44,21 @@ export const addNewLocation = async (req, res) => {
 };
 
 
+export const recentLocation = async(req,res)=>{
+  try{
+    const recentLocations = await FromLocation.find().sort({createdAt:-1}).limit(5);
+    // console.log(recentLocations.length);
+    
+    return res.status(201).json({
+      data:recentLocations
+    })
+    
+  }catch(err){
+    res.status(400).json({
+      message:"error while fetching recent location",
+      error: err.message
+    })
+  }
+}
+
+

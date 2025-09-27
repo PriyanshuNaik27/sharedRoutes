@@ -19,7 +19,7 @@ const generateAccessAndRefreshToken = async (userId) => {
 
 export const registerUser = async (req, res) => {
   //signup
-
+ 
   /*
  take email
  take password 
