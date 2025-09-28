@@ -27,4 +27,4 @@ const toPlacesSchema =  new mongoose.Schema({
 //  toPlacesSchema.index({ placeSlug: 1, fromLocation: 1 }, { unique: true });
 
 
- export const toPlaces=   mongoose.model("ToPlaces",toPlacesSchema)
+ export const ToPlace =   mongoose.model("ToPlace",toPlacesSchema)

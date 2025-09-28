@@ -1,12 +1,23 @@
 import mongoose from "mongoose";
 const reviewSchema = new mongoose.Schema(
   {
-    createdBy: {
+    addedBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
     description: {
       type: String,
+    },
+
+    //LocationName isliye name nhi diya kyuki ref  have to id aaiga , too id aiigi naki name ,
+    location:{
+      type : mongoose.Schema.Types.ObjectId,
+      ref : "FromLocation"
+    },
+
+    place :{
+      type : mongoose.Schema.Types.ObjectId,
+      ref:"ToPlace"
     },
 
     rating: {

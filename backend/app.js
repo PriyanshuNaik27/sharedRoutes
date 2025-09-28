@@ -24,5 +24,7 @@ app.use("/api/v1/fromLocation",fromLocationRouter);
 import toPlaceRouter from "./routes/toPlaces.route.js";
 app.use("/api/v1/fromLocation",toPlaceRouter);
 
+import reviewRouter from "./routes/reviews.route.js"
+app.use("/api/v1/fromLocation",reviewRouter);
 
 export default app;

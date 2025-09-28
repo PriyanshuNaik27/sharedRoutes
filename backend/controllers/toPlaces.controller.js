@@ -1,4 +1,4 @@
-import { toPlaces } from "../models/toPlaces.model.js";
+import { ToPlace } from "../models/toPlaces.model.js";
 import { FromLocation } from "../models/fromLocation.model.js";
 import slugify from "slugify";
 
@@ -17,7 +17,7 @@ export const getAllPlaces = async(req,res)=>{
         //learn about populate and its importance from here 
         //https://www.geeksforgeeks.org/mongodb/mongoose-populate-method/
 
-        const places = await toPlaces.find({fromLocation: doesExist._id})
+        const places = await ToPlace.find({fromLocation: doesExist._id})
                         .populate("fromLocation");
 
         return res.status(200).json({
@@ -38,11 +38,7 @@ export const addPlaceToLocation = async(req,res)=>{
     try{
         const {locationSlug} = req.params;
         const {placeName} = req.body;
-        const placeSlug = slugify(placeName,{
-            lower : true,
-            strict:true,
-            trim:true,
-        });
+        const placeSlug = placeName.toLowerCase().replace(/\s/g, '');
 
         let userId = req.user?._id;
         if(!userId){
@@ -62,7 +58,7 @@ export const addPlaceToLocation = async(req,res)=>{
         });
         }
 
-        const place  = await toPlaces.create({
+        const place  = await ToPlace.create({
             placeName,
             placeSlug,
             fromLocation:location._id,

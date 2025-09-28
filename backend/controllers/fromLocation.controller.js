@@ -17,11 +17,11 @@ export const addNewLocation = async (req, res) => {
     //this is from where i used slugify
     //https://www.npmjs.com/package/slugify?activeTab=readme
 
-    const locationSlug = slugify(locationName, {
-      lower: true,
-      strict: true,
-      trim: true,
-    });
+    // const locationSlug = slugify(locationName, {
+    //   lower: true,
+    //   strict: true,
+    //   trim: true,
+    // });
     let userId = req.user?._id; // comes later from JWT
     if (!userId) {
       // use a valid ObjectId from your User collection for testing
