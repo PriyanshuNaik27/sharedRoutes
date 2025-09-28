@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function ToPlace() {
   const { locationSlug } = useParams();
@@ -42,16 +43,23 @@ export default function ToPlace() {
         {places.length > 0 ? (
           <ul className="space-y-3">
             {places.map((place) => (
-              <li
-                key={place._id}
-                className="p-3 bg-white rounded-lg shadow-md border"
+            <li
+              key={place._id}
+              className="p-3 bg-white rounded-lg shadow-md border hover:shadow-lg transition"
+            >
+              {/* Link to PlaceDetails page */}
+              <Link
+                to={`/location/${locationSlug}/${place.placeSlug}`}
+                className="font-semibold text-blue-600 hover:underline"
               >
-                <p className="font-semibold">{place.placeName}</p>
-                <p className="text-sm text-gray-500">
-                  Location: {place.fromLocation?.locationName}
-                </p>
-              </li>
-            ))}
+                {place.placeName}
+              </Link>
+              <p className="text-sm text-gray-500">
+                Location: {place.fromLocation?.locationName}
+              </p>
+            </li>
+          ))}
+
           </ul>
         ) : (
           <p className="text-gray-500">No places found</p>

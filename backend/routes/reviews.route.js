@@ -5,6 +5,6 @@ const router = Router();
 
 
 router.post("/:locationSlug/:placeSlug/addReview",addReview);
-router.get("/:locationSlug/:placeSlug",getReviews);
+router.get("/:locationSlug/:placeSlug/reviews",getReviews);
 
 export default router;

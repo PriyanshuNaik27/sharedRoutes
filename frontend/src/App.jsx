@@ -7,7 +7,7 @@ import AddLocation from "./pages/AddLocation";
 import AddPlace from "./pages/AddPlace";
 import ProtectedRoute from "./components/ProtectedRoute";
 import ToPlaces from "./pages/ToPlace";
-
+import PlaceDetails from "./pages/PlaceDetails";
 function App() {
   return (
     <Router>
@@ -18,6 +18,8 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/location/:locationSlug/:placeSlug" element={<PlaceDetails />} />
+
 
         {/* Protected pages */}
         <Route
