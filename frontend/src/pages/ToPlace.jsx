@@ -11,7 +11,7 @@ export default function ToPlace() {
     const fetchPlaces = async () => {
       try {
         const res = await fetch(
-          `${import.meta.env.VITE_BACKEND_URL}/api/v1/fromLocation/${locationSlug}/places`
+          `${import.meta.env.VITE_BACKEND_URL}/api/v1/toPlace/${locationSlug}/places`
         );
         const data = await res.json();
 

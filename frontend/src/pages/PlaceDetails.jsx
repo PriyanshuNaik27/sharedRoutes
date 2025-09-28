@@ -16,7 +16,7 @@ export default function PlaceDetails() {
     const fetchReviews = async () => {
       try {
         const res = await axios.get(
-          `${backendUrl}/api/v1/fromLocation/${locationSlug}/${placeSlug}/reviews`
+          `${backendUrl}/api/v1/review/${locationSlug}/${placeSlug}/reviews`
         );
         setReviews(res.data.data || []);
       } catch (err) {
@@ -38,7 +38,7 @@ export default function PlaceDetails() {
 
     try {
       const res = await axios.post(
-        `${backendUrl}/api/v1/fromLocation/${locationSlug}/${placeSlug}/addReview`,
+        `${backendUrl}/api/v1/review/${locationSlug}/${placeSlug}/addReview`,
         newReview,
         {
           headers: {

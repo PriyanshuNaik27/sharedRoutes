@@ -1,11 +1,26 @@
-import experss from "express"
+import { Router } from "express";
+import {
+  loginUser,
+  logoutUser,
+  registerUser,
+} from "../controllers/user.controller.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
-import { registerUser,loginUser } from "../controllers/user.controller.js";
-const router = experss.Router();
 
-router.post("/register",registerUser);
-router.post("/login",loginUser);
-// router.post("logout",verifyJWT,logoutUser);
-// router.get("getProfile",getProfile);
+const router = Router();
+
+
+router.route("/register").post(registerUser);
+router.route("/login").post(loginUser);
+
+router.route("/logout").post(verifyJWT, logoutUser);
+
+router.route("/me").get(verifyJWT, (req, res) => {
+ 
+  return res.status(200).json({
+    success: true,
+    user: req.user,
+  });
+});
 
 export default router;
+

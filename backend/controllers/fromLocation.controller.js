@@ -22,10 +22,12 @@ export const addNewLocation = async (req, res) => {
     //   strict: true,
     //   trim: true,
     // });
-    let userId = req.user?._id; // comes later from JWT
+    const userId = req.user?._id; 
     if (!userId) {
-      // use a valid ObjectId from your User collection for testing
-      userId = "66f07e5f92c8a31f449fa1c7";
+      
+      res.status(400).json({
+        message: "didnnot foujnd user id ,login !! "
+      })
     }
 
     if (await FromLocation.findOne({ locationSlug })) {
@@ -70,4 +72,23 @@ export const recentLocation = async(req,res)=>{
   }
 }
 
+export const allLocations = async(req,res) =>{
+  try {
+    const locactions = await FromLocation.find();
+    if(locactions.length ===0){
+      res.status(400).json({
+        message:"no location are present"
+      })
+    }
 
+    res.status(200).json({
+      message:"location succesfuly sended",
+      data : locactions
+    })
+  } catch (err) {
+    res.status(400).json({
+      message:"error while sending all the locations",
+      error: err.message
+    })
+  }
+}

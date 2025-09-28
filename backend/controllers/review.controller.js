@@ -5,12 +5,16 @@ import { ToPlace } from "../models/toPlaces.model.js";
 export const addReview = async(req,res)=>{
     
     try {
-    const user = req.user;
+    // const user = req.user;
 
-    let userId = req.user?._id;
-        if(!userId){
-            userId = "66f07e5f92c8a31f449fa1c7"// for testing;
+    const userId = req.user?._id; 
+    if (!userId) {
+      
+      res.status(400).json({
+        message: "didnnot foujnd user id ,login !! "
+      })
     }
+
     // const locationSlug = req.params;
     // const placeSlug = req.params; 
     // dont use this way as now both the slug will be objectss , instead destruct them 

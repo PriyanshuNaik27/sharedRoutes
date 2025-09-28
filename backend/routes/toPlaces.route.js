@@ -7,7 +7,7 @@ const router  = Router();
 
 router.get("/:locationSlug/places",getAllPlaces);//to get all places from location
 
-router.post("/:locationSlug/places",addPlaceToLocation);//to add a new place to a location
+router.post("/:locationSlug/places",verifyJWT,addPlaceToLocation);//to add a new place to a location
 
 // router.get("/:locationSlug/places/:id",getPlaceInfo);
 

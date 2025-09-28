@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import InputField from "../components/InputField";
 import axios from "axios";
 
@@ -8,7 +8,9 @@ const backendUrl = import.meta.env.VITE_BACKEND_URL;
 const Login = () => {
   const [form, setForm] = useState({ email: "", password: "" });
   const [message, setMessage] = useState("");
-  const navigate = useNavigate(); // for redirecting
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from || "/";
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -17,18 +19,19 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(`${backendUrl}/api/v1/user/login`, form, {
+      await axios.post(`${backendUrl}/api/v1/user/login`, form, {
         withCredentials: true,
       });
-      setMessage(res.data.message || "Logged in successfully!");
-      // Optional: redirect after successful login
-      // navigate("/"); 
+      // ❌ REMOVED: localStorage.setItem("accessToken", res.data.accessToken);
+      // The httpOnly cookie is now the only source of truth.
+      navigate(from, { replace: true });
     } catch (err) {
       console.error(err);
       setMessage(err.response?.data?.message || "Something went wrong");
     }
   };
 
+  // ... rest of your JSX remains the same
   return (
     <div className="flex justify-center items-center h-screen">
       <form className="w-96 p-6 border rounded-md shadow-md" onSubmit={handleSubmit}>
@@ -58,16 +61,15 @@ const Login = () => {
 
         {message && <p className="mt-3 text-red-500">{message}</p>}
 
-        {/* Redirect to Register */}
         <p className="mt-4 text-center">
-  Don't have an account?{" "}
-  <span
-    className="text-blue-500 underline cursor-pointer"
-    onClick={() => navigate("/register")}
-  >
-    Register here
-  </span>
-</p>
+          Don't have an account?{" "}
+          <span
+            className="text-blue-500 underline cursor-pointer"
+            onClick={() => navigate("/register")}
+          >
+            Register here
+          </span>
+        </p>
       </form>
     </div>
   );

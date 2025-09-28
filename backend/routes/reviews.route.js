@@ -4,7 +4,7 @@ import { addReview,getReviews } from "../controllers/review.controller.js";
 const router = Router();
 
 
-router.post("/:locationSlug/:placeSlug/addReview",addReview);
+router.post("/:locationSlug/:placeSlug/addReview",verifyJWT,addReview);
 router.get("/:locationSlug/:placeSlug/reviews",getReviews);
 
 export default router;

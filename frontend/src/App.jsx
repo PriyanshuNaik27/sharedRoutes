@@ -1,4 +1,6 @@
+import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import axios from "axios";
 import Navbar from "./components/Navbar";
 import LandingPage from "./pages/LandingPage";
 import Login from "./pages/Login";
@@ -8,24 +10,60 @@ import AddPlace from "./pages/AddPlace";
 import ProtectedRoute from "./components/ProtectedRoute";
 import ToPlaces from "./pages/ToPlace";
 import PlaceDetails from "./pages/PlaceDetails";
+
 function App() {
+  // 1. Manage login state here, in the top-level component.
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
+
+  // 2. Check user status when the app first loads.
+  useEffect(() => {
+    const checkUserStatus = async () => {
+      try {
+        await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/user/me`, {
+          withCredentials: true,
+        });
+        setIsLoggedIn(true);
+      } catch (error) {
+        setIsLoggedIn(false);
+      } finally {
+        setIsCheckingAuth(false);
+      }
+    };
+    checkUserStatus();
+  }, []);
+
+  // 3. Create a function to handle successful login.
+  const handleLogin = () => {
+    setIsLoggedIn(true);
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+  };
+
+  if (isCheckingAuth) {
+    return <div className="flex justify-center items-center h-screen">Loading...</div>;
+  }
+
   return (
     <Router>
-      {/* Navbar will always show */}
-      <Navbar />
+      {/* 4. Pass login state and handlers down to the Navbar */}
+      <Navbar isLoggedIn={isLoggedIn} onLogout={handleLogout} />
 
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/login" element={<Login />} />
+        {/* 5. Pass the handleLogin function down to the Login component */}
+        <Route path="/login" element={<Login onLoginSuccess={handleLogin} />} />
         <Route path="/register" element={<Register />} />
         <Route path="/location/:locationSlug/:placeSlug" element={<PlaceDetails />} />
+        <Route path="/location/:locationSlug" element={<ToPlaces />} />
 
-
-        {/* Protected pages */}
+        {/* 6. Protected pages now use the reliable isLoggedIn state */}
         <Route
           path="/add-location"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute isLoggedIn={isLoggedIn}>
               <AddLocation />
             </ProtectedRoute>
           }
@@ -33,14 +71,12 @@ function App() {
         <Route
           path="/add-place"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute isLoggedIn={isLoggedIn}>
               <AddPlace />
             </ProtectedRoute>
           }
         />
-        <Route path="/location/:locationSlug" element={<ToPlaces />} />
       </Routes>
-      
     </Router>
   );
 }

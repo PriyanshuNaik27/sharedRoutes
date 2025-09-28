@@ -1,12 +1,19 @@
-// ProtectedRoute.jsx
-import { Navigate } from "react-router-dom";
+import React from 'react';
+import { Navigate, useLocation } from 'react-router-dom';
 
-export default function ProtectedRoute({ children }) {
-  const token = localStorage.getItem("accessToken"); // check if user is logged in
+// This component checks if a user is logged in.
+// If they are, it renders the child component (the protected page).
+// If not, it redirects them to the login page.
+const ProtectedRoute = ({ isLoggedIn, children }) => {
+  const location = useLocation();
 
-  if (!token) {
-    return <Navigate to="/login" replace />; // redirect to login
+  if (!isLoggedIn) {
+    // Redirect them to the /login page, but save the current location they were
+    // trying to go to. This allows us to send them back there after they log in.
+    return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
-  return children; // allow access if logged in
-}
+  return children;
+};
+
+export default ProtectedRoute;

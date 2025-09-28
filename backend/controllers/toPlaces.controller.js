@@ -40,15 +40,19 @@ export const addPlaceToLocation = async(req,res)=>{
         const {placeName} = req.body;
         const placeSlug = placeName.toLowerCase().replace(/\s/g, '');
 
-        let userId = req.user?._id;
-        if(!userId){
-            userId = "66f07e5f92c8a31f449fa1c7"// for testing;
-        }
+        const userId = req.user?._id; 
+    if (!userId) {
+      
+      res.status(400).json({
+        message: "didnnot foujnd user id ,login !! "
+      })
+    }
+
         const location = await FromLocation.findOne({ locationSlug });
         if(!location){
             return res.status(400).json("cannot find the location in database");
         }
-        const existingPlace = await toPlaces.findOne({
+        const existingPlace = await ToPlace.findOne({
             placeSlug,
             fromLocation:location._id
         });

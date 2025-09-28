@@ -85,7 +85,8 @@ export const registerUser = async (req, res) => {
       //for cookies - to not make it modifly by frontend
       const options = {
         httpOnly: true,
-        secure: true,
+        secure: process.env.NODE_ENV === "production", // ✅ only true in production
+        sameSite: "lax", // allows sending cookie from frontend dev server
       };
 
       return res
@@ -127,11 +128,12 @@ export const loginUser = async (req, res) => {
     );
 
     //for cookies - to not make it modifly by frontend
-    const options = {
-      httpOnly: true,
-      // secure: true,
-      secure : false
-    };
+    //learn about this more
+      const options = {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production", // ✅ only true in production
+        sameSite: "lax", // allows sending cookie from frontend dev server
+      };
 
     return res
       .status(200)
@@ -165,11 +167,16 @@ export const logoutUser = async (req, res) => {
       }
     );
 
-    const options = {
-      httpOnly: true,
-      // secure: true,
-      secure : false,
-    };
+    // In loginUser and registerUser
+    //learn about this more
+      const options = {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production", // ✅ only true in production
+        sameSite: "lax", // allows sending cookie from frontend dev server
+      };
+
+      
+
     return res
       .status(200)
       .clearCookie("accessToken", options)

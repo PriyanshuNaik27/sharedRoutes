@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import bcyrpt from "bcrypt";
+import bcrypt from "bcrypt";
 import  jwt  from "jsonwebtoken";
 const userSchema= new mongoose.Schema(
     {
@@ -29,7 +29,7 @@ userSchema.pre("save", async function(next){
       return next();
    }
    try{
-      this.password= await bcyrpt.hash(this.password,10);
+      this.password= await bcrypt.hash(this.password,10);
       next();
    }catch(error){
       console.error("error while hashing the password",error);
@@ -40,7 +40,7 @@ userSchema.pre("save", async function(next){
 
 //method to see if the password is correct or not
 userSchema.methods.isPasswordCorrect = async function(password){
-   return await bcyrpt.compare(password,this.password);
+   return await bcrypt.compare(password,this.password);
 }
 
 userSchema.methods.generateAccessToken = function(){

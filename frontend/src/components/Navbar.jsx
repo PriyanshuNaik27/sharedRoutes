@@ -1,20 +1,54 @@
-// src/components/Navbar.jsx
-import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import axios from "axios";
 
 export default function Navbar() {
   const navigate = useNavigate();
-  const token = localStorage.getItem("accessToken");
+  const location = useLocation();
 
-  const handleLogout = () => {
-    localStorage.removeItem("accessToken");
-    navigate("/login");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isChecking, setIsChecking] = useState(true);
+
+  useEffect(() => {
+    const checkUserStatus = async () => {
+      setIsChecking(true);
+      try {
+        await axios.get(
+          `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/me`,
+          { withCredentials: true }
+        );
+        setIsLoggedIn(true);
+      } catch (error) {
+        // 👇 THIS IS THE NEW LINE
+        console.error("Error checking user status on frontend:", error.response || error);
+        setIsLoggedIn(false);
+      } finally {
+        setIsChecking(false);
+      }
+    };
+    checkUserStatus();
+  }, [location.pathname]);
+
+  const handleLogout = async () => {
+    try {
+      await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/logout`,
+        {},
+        { withCredentials: true }
+      );
+    } catch (error) {
+      console.error("Server logout failed:", error);
+    } finally {
+      setIsLoggedIn(false);
+      navigate("/login");
+    }
   };
 
   const handleProtected = (path) => {
-    if (!token) {
-      navigate("/login"); // redirect to login if not logged in
+    if (isLoggedIn) {
+      navigate(path);
     } else {
-      navigate(path); // go to the protected page
+      navigate("/login");
     }
   };
 
@@ -26,16 +60,17 @@ export default function Navbar() {
           TravelApp
         </Link>
 
-        {/* Protected buttons */}
         <button
-          className="text-gray-700 hover:text-blue-500 cursor-pointer transition"
+          className="text-gray-700 hover:text-blue-500 cursor-pointer transition disabled:cursor-not-allowed disabled:opacity-50"
           onClick={() => handleProtected("/add-location")}
+          disabled={isChecking}
         >
           Add Location
         </button>
         <button
-          className="text-gray-700 hover:text-blue-500 cursor-pointer transition"
+          className="text-gray-700 hover:text-blue-500 cursor-pointer transition disabled:cursor-not-allowed disabled:opacity-50"
           onClick={() => handleProtected("/add-place")}
+          disabled={isChecking}
         >
           Add Place
         </button>
@@ -43,24 +78,18 @@ export default function Navbar() {
 
       {/* Right side */}
       <div className="flex items-center space-x-4">
-        {!token && (
+        {isChecking ? (
+          <p className="text-gray-500">Loading...</p>
+        ) : !isLoggedIn ? (
           <>
-            <Link
-              className="text-gray-700 hover:text-blue-500 transition"
-              to="/login"
-            >
+            <Link className="text-gray-700 hover:text-blue-500 transition" to="/login">
               Login
             </Link>
-            <Link
-              className="text-gray-700 hover:text-blue-500 transition"
-              to="/register"
-            >
+            <Link className="text-gray-700 hover:text-blue-500 transition" to="/register">
               Register
             </Link>
           </>
-        )}
-
-        {token && (
+        ) : (
           <button
             className="bg-red-500 hover:bg-red-600 text-white px-4 py-1 rounded transition"
             onClick={handleLogout}
@@ -72,3 +101,4 @@ export default function Navbar() {
     </nav>
   );
 }
+
