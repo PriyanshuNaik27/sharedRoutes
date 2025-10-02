@@ -30,20 +30,13 @@ export default function PlaceDetails() {
   // Submit review (only if logged in)
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem("accessToken");
-    if (!token) {
-      setMessage("You need to login to add a review.");
-      return;
-    }
 
     try {
       const res = await axios.post(
         `${backendUrl}/api/v1/review/${locationSlug}/${placeSlug}/addReview`,
         newReview,
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          withCredentials: true,
         }
       );
       setMessage("Review added!");
@@ -51,7 +44,11 @@ export default function PlaceDetails() {
       setNewReview({ description: "", rating: 5 });
     } catch (err) {
       console.error(err);
-      setMessage(err.response?.data?.message || "Failed to add review");
+      if (err.response?.status === 401) {
+        setMessage("You need to login to add a review.");
+      } else {
+        setMessage(err.response?.data?.message || "Failed to add review");
+      }
     }
   };
 

@@ -55,7 +55,7 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         {/* 5. Pass the handleLogin function down to the Login component */}
         <Route path="/login" element={<Login onLoginSuccess={handleLogin} />} />
-        <Route path="/register" element={<Register />} />
+        <Route path="/register" element={<Register onLoginSuccess={handleLogin} />} />
         <Route path="/location/:locationSlug/:placeSlug" element={<PlaceDetails />} />
         <Route path="/location/:locationSlug" element={<ToPlaces />} />
 

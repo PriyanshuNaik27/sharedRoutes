@@ -57,7 +57,7 @@ export const addNewLocation = async (req, res) => {
 
 export const recentLocation = async(req,res)=>{
   try{
-    const recentLocations = await FromLocation.find().sort({createdAt:-1});
+    const recentLocations = await FromLocation.find().sort({createdAt:-1}).limit(6);
     // console.log(recentLocations.length);
     
     return res.status(201).json({
