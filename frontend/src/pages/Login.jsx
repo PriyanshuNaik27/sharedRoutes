@@ -5,7 +5,7 @@ import axios from "axios";
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-const Login = () => {
+const Login = ({ onLoginSuccess }) => {
   const [form, setForm] = useState({ email: "", password: "" });
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
@@ -22,8 +22,7 @@ const Login = () => {
       await axios.post(`${backendUrl}/api/v1/user/login`, form, {
         withCredentials: true,
       });
-      // ❌ REMOVED: localStorage.setItem("accessToken", res.data.accessToken);
-      // The httpOnly cookie is now the only source of truth.
+      onLoginSuccess?.();
       navigate(from, { replace: true });
     } catch (err) {
       console.error(err);

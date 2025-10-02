@@ -42,14 +42,14 @@ export const registerUser = async (req, res) => {
       .max(50, { message: "Password is too long" }),
     userName: z
       .string()
-      .min(1, { message: "Username must be at least 5 characters" })
+      .min(1, { message: "Username must be at least 1 characters" })
       .max(50, { message: "Username is too long" }),
   });
 
   const parsedData = requireBody.safeParse(req.body);
 
   if (!parsedData.success) {
-    return res.json({
+    return res.status(400).json({
       status: 400,
       errors: parsedData.error.issues.map((err) => ({
         field: err.path[0],
@@ -63,7 +63,7 @@ export const registerUser = async (req, res) => {
       const existedUser = await User.findOne({ email });
       if (existedUser) {
         console.error("user exits");
-        return res.json({
+        return res.status(404).json({
           status: 404,
           message: "user is already exits",
         });
