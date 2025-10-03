@@ -28,44 +28,54 @@ export default function Navbar({ isLoggedIn, onLogout }) {
   };
 
   return (
-    <nav className="bg-white shadow-md px-6 py-4 flex items-center justify-between">
-      <div className="flex items-center space-x-6">
-        <Link className="text-xl font-bold text-gray-800 hover:text-blue-500" to="/">
-          TravelApp
-        </Link>
-
-        <button
-          className="text-gray-700 hover:text-blue-500 cursor-pointer transition"
-          onClick={() => handleProtected("/add-location")}
-        >
-          Add Location
-        </button>
-        <button
-          className="text-gray-700 hover:text-blue-500 cursor-pointer transition"
-          onClick={() => handleProtected("/add-place")}
-        >
-          Add Place
-        </button>
-      </div>
-
-      <div className="flex items-center space-x-4">
-        {!isLoggedIn ? (
-          <>
-            <Link className="text-gray-700 hover:text-blue-500 transition" to="/login">
-              Login
+    <nav className="sticky top-0 z-50 bg-white shadow-sm">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+        <div className="h-16 flex items-center justify-between">
+          <div className="flex items-center gap-6">
+            <Link className="text-xl font-bold text-gray-900 tracking-tight hover:text-blue-600" to="/">
+              TravelApp
             </Link>
-            <Link className="text-gray-700 hover:text-blue-500 transition" to="/register">
-              Register
-            </Link>
-          </>
-        ) : (
-          <button
-            className="bg-red-500 hover:bg-red-600 text-white px-4 py-1 rounded transition"
-            onClick={handleLogout}
-          >
-            Logout
-          </button>
-        )}
+
+            <button
+              className="hidden sm:inline-flex text-gray-700 hover:text-blue-600 transition-colors"
+              onClick={() => handleProtected("/add-location")}
+            >
+              Add Location
+            </button>
+            <button
+              className="hidden sm:inline-flex text-gray-700 hover:text-blue-600 transition-colors"
+              onClick={() => handleProtected("/add-place")}
+            >
+              Add Place
+            </button>
+          </div>
+
+          <div className="flex items-center gap-3">
+            {!isLoggedIn ? (
+              <>
+                <Link
+                  className="px-3 py-2 rounded-md text-gray-800 hover:text-blue-600 transition-colors"
+                  to="/login"
+                >
+                  Login
+                </Link>
+                <Link
+                  className="px-3 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700 transition-colors"
+                  to="/register"
+                >
+                  Register
+                </Link>
+              </>
+            ) : (
+              <button
+                className="px-4 py-2 rounded-md bg-red-500 text-white hover:bg-red-600 transition-colors"
+                onClick={handleLogout}
+              >
+                Logout
+              </button>
+            )}
+          </div>
+        </div>
       </div>
     </nav>
   );
