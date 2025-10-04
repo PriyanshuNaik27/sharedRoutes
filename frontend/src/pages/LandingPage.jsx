@@ -42,7 +42,7 @@ export default function LandingPage() {
       <div className="w-full">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div
-            className="relative h-[22rem] md:h-[28rem] rounded-2xl overflow-hidden shadow-lg bg-cover bg-center"
+            className="relative h-[28rem] md:h-[34rem] rounded-2xl overflow-hidden shadow-lg bg-cover bg-center"
             style={{ backgroundImage: `url(${heroImage})` }}
           >
             <div className="absolute inset-0 bg-black/30" />

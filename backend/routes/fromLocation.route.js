@@ -1,9 +1,11 @@
 import { Router } from "express";
 import {verifyJWT} from "../middlewares/auth.middleware.js"
 import { addNewLocation, recentLocation ,allLocations} from "../controllers/fromLocation.controller.js";
+import { upload } from "../middlewares/multer.middleware.js";
+
 const router = Router();
 
-router.post("/",verifyJWT,addNewLocation);
+router.post("/", verifyJWT, upload.single('image'), addNewLocation);
 
 router.get("/recentLocation",recentLocation)// to display at dashboard 
 

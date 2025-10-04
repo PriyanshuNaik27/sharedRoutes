@@ -10,3 +10,38 @@ This will always be truthy, even if empty.
 ✅ Use findOne() instead.
 
 ................................................
+
+MUulter and cloudinary 
+🔹 Why do we need Multer if using Cloudinary?
+
+Cloudinary (and other storage services) expect you to send them the file. But when a client uploads an image:
+
+The file comes in the HTTP request body (binary data).
+
+Express by default cannot handle file uploads.
+
+Multer parses the incoming request and temporarily stores the file (in memory or disk).
+
+Then, you can pass that file to Cloudinary’s upload API.
+
+🔹 Flow in a Node.js + Cloudinary setup
+
+User uploads image from frontend.
+
+Backend receives request → Multer extracts the file.
+
+Pass file buffer/path to Cloudinary uploader.
+
+Cloudinary returns a public URL.
+
+Save that URL in your database.
+
+.............................................................................................
+
+How Memory Storage Works:
+Flow:
+User uploads image → Multer stores in RAM as buffer
+We pass req.file.buffer directly to Cloudinary
+Cloudinary uploads from memory → No disk involved
+We get back the Cloudinary URL
+Buffer is automatically garbage collected
