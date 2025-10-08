@@ -17,6 +17,10 @@ app.use(cors(corsOptions)); // Use the detailed options
 app.use(cookieParser());
 app.use(express.json());
 
+app.get("/", (req, res) => {
+  res.send("Server is working!");
+});
+
 import userRouter from "./routes/user.route.js";
 app.use("/api/v1/user",userRouter);
 
