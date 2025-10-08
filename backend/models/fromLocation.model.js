@@ -15,7 +15,7 @@ const locationSchema= new mongoose.Schema(
         required:true,
         unique:true,
       },
-      image:{
+      locationImage:{
         type:String,
         default:null
       }

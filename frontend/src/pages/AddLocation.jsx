@@ -54,7 +54,7 @@ export default function AddLocation() {
       formData.append('locationName', locationName);
       
       if (selectedImage) {
-        formData.append('image', selectedImage);
+        formData.append('locationImage', selectedImage);
       }
 
       const res = await axios.post(

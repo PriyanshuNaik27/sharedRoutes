@@ -1,6 +1,6 @@
 import { FromLocation } from "../models/fromLocation.model.js";
-import slugify from "slugify";
-import { uploadBufferToCloudinary } from "../utils/cloudinary.js";
+// import slugify from "slugify";
+import { uploadOnCloudinary } from "../utils/cloudinary.js";
 
 export const addNewLocation = async (req, res) => {
   try {
@@ -34,19 +34,23 @@ export const addNewLocation = async (req, res) => {
     }
 
     // Handle image upload
-    let imageUrl = null;
-    if (req.file) {
-      const cloudinaryResult = await uploadBufferToCloudinary(req.file.buffer);
-      if (cloudinaryResult) {
-        imageUrl = cloudinaryResult.secure_url;
-      }
+    console.log("Received files:", req.files);
+    const imageUrl =  req.files?.locationImage[0]?.path;  
+    console.log(imageUrl);
+
+    const locationImage = await uploadOnCloudinary(imageUrl);
+
+    if(!locationImage){
+      return res.status(400).json({
+        message: "error while uploading the image",
+      });
     }
 
     const newLocation = await FromLocation.create({
       locationName: locationName,
       locationSlug: locationSlug,
       uploadedBy: userId,
-      image: imageUrl,
+      locationImage: locationImage.url,
     });
 
     return res.status(201).json({

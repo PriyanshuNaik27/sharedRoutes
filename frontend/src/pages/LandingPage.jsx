@@ -2,6 +2,9 @@ import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import heroImage from "../assets/hero.png";
+import sharedRoutesImage  from "../assets/sharedRoutes.png";
+
+
 
 export default function LandingPage() {
   const [search, setSearch] = useState("");
@@ -37,7 +40,7 @@ export default function LandingPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-start bg-gray-100">
+    <div className="min-h-screen flex flex-col items-center justify-start bg-gray-100 p-2">
       {/* Hero section with navbar overlay: pull up behind the sticky navbar */}
       <div className="w-full">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
@@ -110,12 +113,17 @@ export default function LandingPage() {
                   to={`/location/${location.locationSlug}`}
                   className="bg-white p-4 rounded-xl shadow hover:shadow-lg transition-shadow border border-transparent hover:border-blue-200"
                 >
+                  <img
+                      src={location.locationImage || sharedRoutesImage}
+                      alt="location image"
+                      className="w-full h-48 object-cover rounded border"
+                    />
                   <h3 className="font-semibold text-lg text-gray-800 hover:text-blue-600 transition-colors">
                     {location.locationName}
                   </h3>
                   <p className="text-sm text-gray-500 mt-1">
                     Added {new Date(location.createdAt).toLocaleDateString()}
-                  </p>
+                  </p>  
                 </Link>
               ))}
             </div>

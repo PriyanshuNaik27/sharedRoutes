@@ -4,9 +4,18 @@ import { addNewLocation, recentLocation ,allLocations} from "../controllers/from
 import { upload } from "../middlewares/multer.middleware.js";
 
 const router = Router();
-
-router.post("/", verifyJWT, upload.single('image'), addNewLocation);
-
+router.post(
+    "/",
+    verifyJWT,
+    upload.fields([
+      {
+        name: "locationImage", // should be a string
+        maxCount: 1,
+      }
+    ]),
+    addNewLocation
+  );
+  
 router.get("/recentLocation",recentLocation)// to display at dashboard 
 
 // router.get("/:locationSlug"); //to get location , if needed sometime 

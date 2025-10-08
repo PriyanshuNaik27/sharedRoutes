@@ -2,7 +2,9 @@ import express from 'express';
 
 //first config all from env;
 import dotenv from 'dotenv';
+console.log("Before config:", process.env.CLOUDINARY_API_KEY); // should be undefined
 dotenv.config();
+console.log("After config:", process.env.CLOUDINARY_API_KEY);  // should show your key
 
 
 import app from  "./app.js";
