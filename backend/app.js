@@ -6,7 +6,7 @@ const app = express();
 
 const corsOptions = {
   // Use the specific origin of your frontend app
-  origin: process.env.FRONTEND_URL || "http://localhost:5173",
+  origin: process.env.FRONTEND_URL ,
   // Allow cookies and other credentials to be sent
   credentials: true,
   // Explicitly allow the headers your frontend might send
