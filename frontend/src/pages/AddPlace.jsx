@@ -79,12 +79,12 @@ export default function AddPlace() {
   
   // ... rest of your JSX remains the same
   return (
-    <div className="min-h-screen flex flex-col items-center justify-start p-6 bg-gray-100">
+    <div className="min-h-screen flex flex-col items-center justify-start p-6 bg-gray-100 dark:bg-gray-900">
       <div className="w-full max-w-md">
-        <h2 className="text-2xl font-semibold mb-4 text-center">Add New Place</h2>
+        <h2 className="text-2xl font-semibold mb-4 text-center dark:text-gray-100">Add New Place</h2>
         <form
           onSubmit={handleSubmit}
-          className="p-6 bg-white shadow-md rounded-md flex flex-col gap-5"
+          className="p-6 bg-white dark:bg-gray-800 shadow-md rounded-md flex flex-col gap-5"
         >
           <div className="relative">
             <input
@@ -93,14 +93,14 @@ export default function AddPlace() {
               value={locationInput}
               onChange={handleLocationChange}
               required
-              className="w-full p-2 border rounded"
+              className="w-full p-2 border rounded dark:bg-gray-900 dark:text-gray-100 dark:border-gray-700"
             />
             {filteredLocations.length > 0 && (
-              <ul className="absolute top-full left-0 w-full mt-1 bg-white border rounded shadow-lg max-h-48 overflow-auto z-10">
+              <ul className="absolute top-full left-0 w-full mt-1 bg-white dark:bg-gray-900 border rounded shadow-lg max-h-48 overflow-auto z-10">
                 {filteredLocations.map((loc) => (
                   <li
                     key={loc._id}
-                    className="p-2 hover:bg-gray-200 cursor-pointer"
+                    className="p-2 hover:bg-gray-200 dark:hover:bg-gray-700 cursor-pointer"
                     onClick={() => handleLocationSelect(loc)}
                   >
                     {loc.locationName}
@@ -115,7 +115,7 @@ export default function AddPlace() {
             value={placeName}
             onChange={(e) => setPlaceName(e.target.value)}
             required
-            className="w-full p-2 border rounded"
+            className="w-full p-2 border rounded dark:bg-gray-900 dark:text-gray-100 dark:border-gray-700"
             disabled={!selectedLocationSlug}
           />
           <button
@@ -127,7 +127,7 @@ export default function AddPlace() {
           </button>
         </form>
         {message && (
-          <p className="mt-4 text-center text-gray-700 font-medium">{message}</p>
+          <p className="mt-4 text-center text-gray-700 dark:text-gray-300 font-medium">{message}</p>
         )}
       </div>
     </div>

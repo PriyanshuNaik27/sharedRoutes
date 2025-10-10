@@ -32,12 +32,12 @@ export default function ToPlace() {
   }, [locationSlug]);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-start p-6 bg-gray-100">
-      <h2 className="text-2xl font-semibold mb-4">
+  <div className="min-h-screen flex flex-col items-center justify-start p-6 bg-gray-100 dark:bg-gray-900">
+  <h2 className="text-2xl font-semibold mb-4 dark:text-gray-100">
         Places from <span className="text-blue-600">{locationSlug}</span>
       </h2>
 
-      {message && <p className="mb-4 text-gray-700">{message}</p>}
+  {message && <p className="mb-4 text-gray-700 dark:text-gray-300">{message}</p>}
 
       <div className="w-full max-w-md">
         {places.length > 0 ? (
@@ -45,16 +45,16 @@ export default function ToPlace() {
             {places.map((place) => (
             <li
               key={place._id}
-              className="p-3 bg-white rounded-lg shadow-md border hover:shadow-lg transition"
+              className="p-3 bg-white dark:bg-gray-800 rounded-lg shadow-md border hover:shadow-lg transition"
             >
               {/* Link to PlaceDetails page */}
               <Link
                 to={`/location/${locationSlug}/${place.placeSlug}`}
-                className="font-semibold text-blue-600 hover:underline"
+                className="font-semibold text-blue-600 dark:text-blue-400 hover:underline"
               >
                 {place.placeName}
               </Link>
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-gray-500 dark:text-gray-300">
                 Location: {place.fromLocation?.locationName}
               </p>
             </li>
@@ -62,7 +62,7 @@ export default function ToPlace() {
 
           </ul>
         ) : (
-          <p className="text-gray-500">No places found</p>
+          <p className="text-gray-500 dark:text-gray-300">No places found</p>
         )}
       </div>
     </div>

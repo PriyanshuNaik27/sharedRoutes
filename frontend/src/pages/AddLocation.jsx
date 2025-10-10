@@ -80,13 +80,13 @@ export default function AddLocation() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-start p-6 bg-gray-100">
+    <div className="min-h-screen flex flex-col items-center justify-start p-6 bg-gray-100 dark:bg-gray-900">
       <div className="w-full max-w-md">
-        <h2 className="text-2xl font-semibold mb-4 text-center">Add New Location</h2>
-        <form onSubmit={handleSubmit} className="p-6 bg-white shadow-md rounded-md flex flex-col gap-4">
+        <h2 className="text-2xl font-semibold mb-4 text-center dark:text-gray-100">Add New Location</h2>
+        <form onSubmit={handleSubmit} className="p-6 bg-white dark:bg-gray-800 shadow-md rounded-md flex flex-col gap-4">
           {/* Location Name Input */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
               Location Name
             </label>
             <input
@@ -95,13 +95,13 @@ export default function AddLocation() {
               value={locationName}
               onChange={(e) => setLocationName(e.target.value)}
               required
-              className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-900 dark:text-gray-100 dark:border-gray-700"
             />
           </div>
 
           {/* Image Upload Section */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
               Location Image (Optional)
             </label>
             
@@ -110,9 +110,9 @@ export default function AddLocation() {
               type="file"
               accept="image/*"
               onChange={handleImageChange}
-              className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-900 dark:text-gray-100 dark:border-gray-700"
             />
-            <p className="text-xs text-gray-500 mt-1">
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
               Max size: 5MB. Supported formats: JPG, PNG, GIF
             </p>
           </div>
@@ -120,7 +120,7 @@ export default function AddLocation() {
           {/* Image Preview */}
           {imagePreview && (
             <div className="relative">
-              <p className="text-sm font-medium text-gray-700 mb-2">Preview:</p>
+              <p className="text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">Preview:</p>
               <div className="relative inline-block">
                 <img
                   src={imagePreview}
@@ -152,8 +152,8 @@ export default function AddLocation() {
         {message && (
           <p className={`mt-4 text-center ${
             message.includes('successfully') || message.includes('created') 
-              ? 'text-green-600' 
-              : 'text-red-600'
+              ? 'text-green-600 dark:text-green-400' 
+              : 'text-red-600 dark:text-red-400'
           }`}>
             {message}
           </p>

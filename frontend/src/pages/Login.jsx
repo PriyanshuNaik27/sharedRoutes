@@ -32,9 +32,9 @@ const Login = ({ onLoginSuccess }) => {
 
   // ... rest of your JSX remains the same
   return (
-    <div className="flex justify-center items-center h-screen">
-      <form className="w-96 p-6 border rounded-md shadow-md" onSubmit={handleSubmit}>
-        <h2 className="text-2xl font-bold mb-4">Login</h2>
+    <div className="flex justify-center items-center h-screen bg-gray-100 dark:bg-gray-900">
+      <form className="w-96 p-6 border rounded-md shadow-md bg-white dark:bg-gray-800" onSubmit={handleSubmit}>
+        <h2 className="text-2xl font-bold mb-4 dark:text-gray-100">Login</h2>
         <InputField
           label="Email"
           name="email"
@@ -60,7 +60,7 @@ const Login = ({ onLoginSuccess }) => {
 
         {message && <p className="mt-3 text-red-500">{message}</p>}
 
-        <p className="mt-4 text-center">
+        <p className="mt-4 text-center dark:text-gray-300">
           Don't have an account?{" "}
           <span
             className="text-blue-500 underline cursor-pointer"

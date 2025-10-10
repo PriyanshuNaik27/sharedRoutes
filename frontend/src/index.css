@@ -1,1 +1,25 @@
 @import "tailwindcss";
+
+/* Global dark mode styles */
+.dark {
+	background-color: #18181b;
+	color: #f3f4f6;
+}
+
+.dark a {
+	color: #93c5fd;
+}
+
+.dark input, .dark textarea, .dark select {
+	background-color: #27272a;
+	color: #f3f4f6;
+	border-color: #52525b;
+}
+
+.dark .bg-white {
+	background-color: #27272a !important;
+}
+
+.dark .text-gray-900 {
+	color: #f3f4f6 !important;
+}

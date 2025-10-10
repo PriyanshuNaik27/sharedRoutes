@@ -40,7 +40,7 @@ export default function LandingPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-start bg-gray-100 p-2">
+  <div className="min-h-screen flex flex-col items-center justify-start bg-gray-100 dark:bg-gray-900 p-2">
       {/* Hero section with navbar overlay: pull up behind the sticky navbar */}
       <div className="w-full">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
@@ -98,12 +98,12 @@ export default function LandingPage() {
 
       {/* Recent Locations Section */}
       <div className="w-full max-w-6xl px-4 sm:px-6 py-10">
-        <div className="bg-white rounded-2xl shadow-md ring-1 ring-black/5 p-6 md:p-8">
-          <h2 className="text-2xl font-semibold mb-6">Featured Locations</h2>
+  <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-md ring-1 ring-black/5 p-6 md:p-8">
+          <h2 className="text-2xl font-semibold mb-6 dark:text-gray-100">Featured Locations</h2>
         
           {isLoading ? (
             <div className="flex justify-center items-center py-8">
-              <div className="text-gray-500">Loading recent locations...</div>
+              <div className="text-gray-500 dark:text-gray-300">Loading recent locations...</div>
             </div>
           ) : recentLocations.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -111,24 +111,24 @@ export default function LandingPage() {
                 <Link
                   key={location._id}
                   to={`/location/${location.locationSlug}`}
-                  className="bg-white p-4 rounded-xl shadow hover:shadow-lg transition-shadow border border-transparent hover:border-blue-200"
+                  className="bg-white dark:bg-gray-900 p-4 rounded-xl shadow hover:shadow-lg transition-shadow border border-transparent hover:border-blue-200 dark:hover:border-blue-400"
                 >
                   <img
                       src={location.locationImage || sharedRoutesImage}
                       alt="location image"
                       className="w-full h-48 object-cover rounded border"
                     />
-                  <h3 className="font-semibold text-lg text-gray-800 hover:text-blue-600 transition-colors">
+                  <h3 className="font-semibold text-lg text-gray-800 dark:text-gray-100 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
                     {location.locationName}
                   </h3>
-                  <p className="text-sm text-gray-500 mt-1">
+                  <p className="text-sm text-gray-500 dark:text-gray-300 mt-1">
                     Added {new Date(location.createdAt).toLocaleDateString()}
                   </p>  
                 </Link>
               ))}
             </div>
           ) : (
-            <div className="text-center py-8 text-gray-500">
+            <div className="text-center py-8 text-gray-500 dark:text-gray-300">
               <p>No recent locations found.</p>
               <p className="text-sm mt-2">Be the first to add a location!</p>
             </div>

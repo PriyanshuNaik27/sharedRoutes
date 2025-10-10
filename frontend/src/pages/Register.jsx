@@ -36,16 +36,16 @@ const Register = ({ onLoginSuccess }) => {
 
 
   return (
-    <div className="min-h-screen flex justify-center items-center bg-gray-100 p-6">
-      <form onSubmit={handleSubmit} className="w-full max-w-md p-6 bg-white border rounded-md shadow-md">
-        <h2 className="text-2xl font-bold mb-4 text-center">Create your account</h2>
+    <div className="min-h-screen flex justify-center items-center bg-gray-100 dark:bg-gray-900 p-6">
+      <form onSubmit={handleSubmit} className="w-full max-w-md p-6 bg-white dark:bg-gray-800 border rounded-md shadow-md">
+  <h2 className="text-2xl font-bold mb-4 text-center dark:text-gray-100">Create your account</h2>
         <InputField label="Username" name="userName" type="text" value={form.userName} onChange={handleChange} placeholder="Enter username" />
         <InputField label="Email" name="email" type="email" value={form.email} onChange={handleChange} placeholder="Enter email" />
         <InputField label="Password" name="password" type="password" value={form.password} onChange={handleChange} placeholder="Enter password" />
         <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 disabled:opacity-50" disabled={isLoading}>
           {isLoading ? "Creating..." : "Register"}
         </button>
-        {message && <p className="mt-3 text-center text-gray-700">{message}</p>}
+  {message && <p className="mt-3 text-center text-gray-700 dark:text-gray-300">{message}</p>}
       </form>
     </div>
   );
