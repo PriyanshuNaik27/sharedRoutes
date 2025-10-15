@@ -93,6 +93,14 @@ export const registerUser = async (req, res) => {
         .status(200)
         .cookie("accessToken", accessToken, options)
         .cookie("refreshToken", refreshToken, options)
+        // Debug: print Set-Cookie headers so we can see what is sent in server logs
+        .on('finish', () => {
+          try {
+            console.log('DEBUG: Set-Cookie headers for register ->', res.getHeader('Set-Cookie'));
+          } catch (e) {
+            console.error('DEBUG: could not read Set-Cookie header', e);
+          }
+        })
         .json({
           user: loggedInUser,
           accessToken,
@@ -139,6 +147,14 @@ export const loginUser = async (req, res) => {
       .status(200)
       .cookie("accessToken", accessToken, options)
       .cookie("refreshToken", refreshToken, options)
+      // Debug: print Set-Cookie headers so we can see what is sent in server logs
+      .on('finish', () => {
+        try {
+          console.log('DEBUG: Set-Cookie headers for login ->', res.getHeader('Set-Cookie'));
+        } catch (e) {
+          console.error('DEBUG: could not read Set-Cookie header', e);
+        }
+      })
       .json({
         user: loggedInUser,
         accessToken,

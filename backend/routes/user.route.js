@@ -22,5 +22,11 @@ router.route("/me").get(verifyJWT, (req, res) => {
   });
 });
 
+// Debug endpoint to inspect cookies sent by the client
+router.get('/debug-cookies', (req, res) => {
+  console.log('DEBUG: incoming cookies ->', req.cookies);
+  return res.status(200).json({ cookies: req.cookies || {} });
+});
+
 export default router;
 
