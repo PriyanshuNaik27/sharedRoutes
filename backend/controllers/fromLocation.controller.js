@@ -6,6 +6,10 @@ export const addNewLocation = async (req, res) => {
   try {
     const { locationName } = req.body;
 
+    if (!locationName || typeof locationName !== 'string' || !locationName.trim()) {
+      return res.status(400).json({ message: 'locationName is required' });
+    }
+
     /*/\s/g is a regular expression:
     \s matches any whitespace character (spaces, tabs, newlines, etc.).
     g is the "global" flag, ensuring that all occurrences of whitespace are replaced, not just the first one. */
@@ -35,15 +39,17 @@ export const addNewLocation = async (req, res) => {
 
     // Handle image upload
     console.log("Received files:", req.files);
-    const imageUrl =  req.files?.locationImage[0]?.path;  
-    console.log(imageUrl);
+    const imagePath = req.files?.locationImage?.[0]?.path;
+    if (!imagePath) {
+      return res.status(400).json({ message: 'locationImage file is required' });
+    }
 
-    const locationImage = await uploadOnCloudinary(imageUrl);
+    console.log('Uploading to cloudinary from temp path:', imagePath);
+    const locationImage = await uploadOnCloudinary(imagePath);
 
-    if(!locationImage){
-      return res.status(400).json({
-        message: "error while uploading the image",
-      });
+    if (!locationImage) {
+      console.error('Cloudinary upload failed for', imagePath);
+      return res.status(500).json({ message: 'error while uploading the image' });
     }
 
     const newLocation = await FromLocation.create({
