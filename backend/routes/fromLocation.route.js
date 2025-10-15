@@ -16,6 +16,9 @@ router.post(
     addNewLocation
   );
   
+// Test route to create a location without file upload (accepts imageUrl in body)
+router.post('/test-create', verifyJWT, testCreateLocation);
+  
 router.get("/recentLocation",recentLocation)// to display at dashboard 
 
 // router.get("/:locationSlug"); //to get location , if needed sometime 
