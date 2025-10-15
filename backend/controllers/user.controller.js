@@ -85,8 +85,8 @@ export const registerUser = async (req, res) => {
       //for cookies - to not make it modifly by frontend
       const options = {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production", // ✅ only true in production
-        sameSite: "lax", // allows sending cookie from frontend dev server
+        secure: process.env.NODE_ENV === "production",
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
       };
 
       return res
@@ -129,11 +129,11 @@ export const loginUser = async (req, res) => {
 
     //for cookies - to not make it modifly by frontend
     //learn about this more
-      const options = {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production", // ✅ only true in production
-        sameSite: "lax", // allows sending cookie from frontend dev server
-      };
+    const options = {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+    };
 
     return res
       .status(200)
@@ -171,8 +171,8 @@ export const logoutUser = async (req, res) => {
     //learn about this more
       const options = {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production", // ✅ only true in production
-        sameSite: "lax", // allows sending cookie from frontend dev server
+        secure: process.env.NODE_ENV === "production",
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
       };
 
       

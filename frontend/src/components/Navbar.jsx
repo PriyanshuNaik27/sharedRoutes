@@ -33,7 +33,7 @@ export default function Navbar({ isLoggedIn, onLogout }) {
         <div className="h-16 flex items-center justify-between">
           <div className="flex items-center gap-6">
             <Link className="text-xl font-bold text-gray-900 tracking-tight hover:text-blue-600" to="/">
-              TravelApp
+              SharedRoutes
             </Link>
 
             <button
