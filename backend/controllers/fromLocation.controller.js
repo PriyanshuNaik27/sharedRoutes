@@ -64,10 +64,38 @@ export const addNewLocation = async (req, res) => {
       data: newLocation,
     });
   } catch (err) {
+    console.error('Error in addNewLocation:', err);
     res.status(500).json({
-      message: "error while creating the location ",
+      message: "error while creating the location",
       error: err.message,
+      stack: err.stack,
     });
+  }
+};
+
+// Test create endpoint: creates a location using an existing image URL (no upload)
+export const testCreateLocation = async (req, res) => {
+  try {
+    const { locationName, imageUrl } = req.body;
+    if (!locationName || !imageUrl) {
+      return res.status(400).json({ message: 'locationName and imageUrl required' });
+    }
+    const locationSlug = locationName.toLowerCase().replace(/\s/g, '');
+    const userId = req.user?._id;
+    if (!userId) return res.status(400).json({ message: 'user id missing' });
+    if (await FromLocation.findOne({ locationSlug })) {
+      return res.status(409).json({ message: 'location already exists' });
+    }
+    const newLocation = await FromLocation.create({
+      locationName,
+      locationSlug,
+      uploadedBy: userId,
+      locationImage: imageUrl,
+    });
+    return res.status(201).json({ message: 'test location created', data: newLocation });
+  } catch (err) {
+    console.error('Error in testCreateLocation:', err);
+    return res.status(500).json({ message: 'failed', error: err.message, stack: err.stack });
   }
 };
 
