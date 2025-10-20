@@ -40,7 +40,7 @@ export default function LandingPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-start bg-gray-100 p-2">
+    <div className="min-h-screen flex flex-col items-center justify-start bg-gray-100 dark:bg-gray-900 p-2">
       {/* Hero section with navbar overlay: pull up behind the sticky navbar */}
       <div className="w-full">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
@@ -57,13 +57,13 @@ export default function LandingPage() {
               </h1>
 
               <form onSubmit={handleSearch} className="mt-6 w-full max-w-2xl">
-                <div className="flex items-stretch bg-white/95 backdrop-blur rounded-full shadow-lg ring-1 ring-black/5">
+                <div className="flex items-stretch bg-white/95 dark:bg-gray-800/80 backdrop-blur rounded-full shadow-lg ring-1 ring-black/5 dark:ring-white/10">
                   <input
                     type="text"
                     placeholder="Enter a location..."
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
-                    className="flex-1 px-5 py-3 rounded-l-full focus:outline-none text-gray-800"
+                    className="flex-1 px-5 py-3 rounded-l-full focus:outline-none text-gray-800 dark:text-gray-100 bg-transparent"
                   />
                   <button
                     type="submit"
@@ -86,7 +86,7 @@ export default function LandingPage() {
                 </button>
                 <button
                   onClick={() => navigate("/add-place")}
-                  className="px-5 py-2 rounded-full bg-white/90 text-gray-900 hover:bg-white shadow"
+                  className="px-5 py-2 rounded-full bg-white/90 dark:bg-gray-700 text-gray-900 dark:text-gray-100 hover:bg-white shadow"
                 >
                   Add a Place
                 </button>
@@ -98,12 +98,12 @@ export default function LandingPage() {
 
       {/* Recent Locations Section */}
       <div className="w-full max-w-6xl px-4 sm:px-6 py-10">
-        <div className="bg-white rounded-2xl shadow-md ring-1 ring-black/5 p-6 md:p-8">
-          <h2 className="text-2xl font-semibold mb-6">Featured Locations</h2>
+        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-md ring-1 ring-black/5 dark:ring-white/10 p-6 md:p-8">
+          <h2 className="text-2xl font-semibold mb-6 text-gray-900 dark:text-gray-100">Featured Locations</h2>
         
           {isLoading ? (
             <div className="flex justify-center items-center py-8">
-              <div className="text-gray-500">Loading recent locations...</div>
+              <div className="text-gray-500 dark:text-gray-300">Loading recent locations...</div>
             </div>
           ) : recentLocations.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -111,24 +111,24 @@ export default function LandingPage() {
                 <Link
                   key={location._id}
                   to={`/location/${location.locationSlug}`}
-                  className="bg-white p-4 rounded-xl shadow hover:shadow-lg transition-shadow border border-transparent hover:border-blue-200"
+                  className="bg-white dark:bg-gray-700 p-4 rounded-xl shadow hover:shadow-lg transition-shadow border border-transparent dark:border-transparent hover:border-blue-200 dark:hover:border-blue-400"
                 >
                   <img
                       src={location.locationImage || sharedRoutesImage}
                       alt="location image"
-                      className="w-full h-48 object-cover rounded border"
+                      className="w-full h-48 object-cover rounded border dark:border-gray-600"
                     />
-                  <h3 className="font-semibold text-lg text-gray-800 hover:text-blue-600 transition-colors">
+                  <h3 className="font-semibold text-lg text-gray-800 dark:text-white hover:text-blue-600 transition-colors">
                     {location.locationName}
                   </h3>
-                  <p className="text-sm text-gray-500 mt-1">
+                  <p className="text-sm text-gray-500 dark:text-gray-300 mt-1">
                     Added {new Date(location.createdAt).toLocaleDateString()}
                   </p>  
                 </Link>
               ))}
             </div>
           ) : (
-            <div className="text-center py-8 text-gray-500">
+            <div className="text-center py-8 text-gray-500 dark:text-gray-300">
               <p>No recent locations found.</p>
               <p className="text-sm mt-2">Be the first to add a location!</p>
             </div>

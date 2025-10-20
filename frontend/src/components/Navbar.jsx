@@ -1,8 +1,10 @@
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useDarkMode } from "../context/DarkModeContext";
 
 export default function Navbar({ isLoggedIn, onLogout }) {
   const navigate = useNavigate();
+  const { darkMode, toggleDarkMode } = useDarkMode();
 
   const handleLogout = async () => {
     try {
@@ -28,11 +30,14 @@ export default function Navbar({ isLoggedIn, onLogout }) {
   };
 
   return (
-    <nav className="sticky top-0 z-50 bg-white shadow-sm">
+    <nav className={`sticky top-0 z-50 ${darkMode ? "bg-gray-900" : "bg-white"} shadow-sm`}>
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="h-16 flex items-center justify-between">
           <div className="flex items-center gap-6">
-            <Link className="text-xl font-bold text-gray-900 tracking-tight hover:text-blue-600" to="/">
+            <Link
+              className={`text-xl font-bold tracking-tight hover:text-blue-600 ${darkMode ? "text-white" : "text-gray-900"}`}
+              to="/"
+            >
               SharedRoutes
             </Link>
 
@@ -51,6 +56,13 @@ export default function Navbar({ isLoggedIn, onLogout }) {
           </div>
 
           <div className="flex items-center gap-3">
+            <button
+              onClick={toggleDarkMode}
+              className={`p-2 rounded-md mr-2 ${darkMode ? "bg-gray-700 text-white" : "bg-gray-100 text-gray-800"}`}
+              aria-label="Toggle dark mode"
+            >
+              {darkMode ? "☀️" : "🌙"}
+            </button>
             {!isLoggedIn ? (
               <>
                 <Link

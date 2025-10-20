@@ -7,6 +7,21 @@
     <title>frontend</title>
   </head>
   <body>
+    <script>
+      (function () {
+        try {
+          var raw = localStorage.getItem("darkMode");
+          if (raw !== null) {
+            if (raw === "true") document.documentElement.classList.add("dark");
+            else document.documentElement.classList.remove("dark");
+          } else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+            document.documentElement.classList.add("dark");
+          }
+        } catch (e) {
+          // ignore
+        }
+      })();
+    </script>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
