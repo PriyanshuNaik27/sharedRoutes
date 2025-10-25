@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import axios from "axios";
 import Navbar from "./components/Navbar";
+import { DarkModeProvider } from "./context/DarkModeContext";
 import LandingPage from "./pages/LandingPage";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -47,37 +48,39 @@ function App() {
   }
 
   return (
-    <Router>
-      {/* 4. Pass login state and handlers down to the Navbar */}
-      <Navbar isLoggedIn={isLoggedIn} onLogout={handleLogout} />
+    <DarkModeProvider>
+      <Router>
+        {/* 4. Pass login state and handlers down to the Navbar */}
+        <Navbar isLoggedIn={isLoggedIn} onLogout={handleLogout} />
 
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        {/* 5. Pass the handleLogin function down to the Login component */}
-        <Route path="/login" element={<Login onLoginSuccess={handleLogin} />} />
-        <Route path="/register" element={<Register onLoginSuccess={handleLogin} />} />
-        <Route path="/location/:locationSlug/:placeSlug" element={<PlaceDetails />} />
-        <Route path="/location/:locationSlug" element={<ToPlaces />} />
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          {/* 5. Pass the handleLogin function down to the Login component */}
+          <Route path="/login" element={<Login onLoginSuccess={handleLogin} />} />
+          <Route path="/register" element={<Register onLoginSuccess={handleLogin} />} />
+          <Route path="/location/:locationSlug/:placeSlug" element={<PlaceDetails />} />
+          <Route path="/location/:locationSlug" element={<ToPlaces />} />
 
-        {/* 6. Protected pages now use the reliable isLoggedIn state */}
-        <Route
-          path="/add-location"
-          element={
-            <ProtectedRoute isLoggedIn={isLoggedIn}>
-              <AddLocation />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/add-place"
-          element={
-            <ProtectedRoute isLoggedIn={isLoggedIn}>
-              <AddPlace />
-            </ProtectedRoute>
-          }
-        />
-      </Routes>
-    </Router>
+          {/* 6. Protected pages now use the reliable isLoggedIn state */}
+          <Route
+            path="/add-location"
+            element={
+              <ProtectedRoute isLoggedIn={isLoggedIn}>
+                <AddLocation />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/add-place"
+            element={
+              <ProtectedRoute isLoggedIn={isLoggedIn}>
+                <AddPlace />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+      </Router>
+    </DarkModeProvider>
   );
 }
 

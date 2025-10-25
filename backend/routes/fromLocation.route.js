@@ -1,6 +1,6 @@
 import { Router } from "express";
 import {verifyJWT} from "../middlewares/auth.middleware.js"
-import { addNewLocation, recentLocation ,allLocations} from "../controllers/fromLocation.controller.js";
+import { addNewLocation, recentLocation, allLocations, testCreateLocation } from "../controllers/fromLocation.controller.js";
 import { upload } from "../middlewares/multer.middleware.js";
 
 const router = Router();
@@ -15,6 +15,9 @@ router.post(
     ]),
     addNewLocation
   );
+  
+// Test route to create a location without file upload (accepts imageUrl in body)
+router.post('/test-create', verifyJWT, testCreateLocation);
   
 router.get("/recentLocation",recentLocation)// to display at dashboard 
 
