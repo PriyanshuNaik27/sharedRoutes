@@ -61,12 +61,13 @@ export default function LandingPage() {
                   <input
                     type="text"
                     placeholder="Enter a location..."
+                    name="locationSearch"
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
                     className="flex-1 px-5 py-3 rounded-l-full focus:outline-none text-gray-800 dark:text-gray-100 bg-transparent"
                   />
                   <button
-                    type="submit"
+                    type="searchSubmit"
                     className="px-5 md:px-6 rounded-r-full bg-blue-600 text-white hover:bg-blue-700 flex items-center gap-2"
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
