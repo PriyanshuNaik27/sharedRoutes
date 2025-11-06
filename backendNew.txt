@@ -45,3 +45,10 @@ We pass req.file.buffer directly to Cloudinary
 Cloudinary uploads from memory → No disk involved
 We get back the Cloudinary URL
 Buffer is automatically garbage collected
+
+
+
+// cpress test 
+// descirbe -> it()-> cy.visit-> so on ...
+// specific folder cypress/e2e
+// filename.cy.js 
