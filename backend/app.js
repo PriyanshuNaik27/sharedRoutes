@@ -35,4 +35,8 @@ app.use("/api/v1/toPlace",toPlaceRouter);
 import reviewRouter from "./routes/reviews.route.js"
 app.use("/api/v1/review",reviewRouter);
 
+
+import googleAuthRouter from "./routes/googleauth.js";
+app.use("/api/v1/user/auth",googleAuthRouter);
+
 export default app;

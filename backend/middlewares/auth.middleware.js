@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import { User } from "../models/user.model.js";
+import { de } from "zod/v4/locales";
 
 export const verifyJWT = async (req, res, next) => {
   try {
@@ -16,11 +17,11 @@ export const verifyJWT = async (req, res, next) => {
     // This is the line that might be failing.
     const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
     
-    // console.log("2. TOKEN DECODED SUCCESSFULLY:", decodedToken);
+    console.log("2. TOKEN DECODED SUCCESSFULLY:", decodedToken);
 
-    const user = await User.findById(decodedToken?._id).select("-password -refreshToken");
+    const user = await User.findById(decodedToken?._id || decodedToken?.id).select("-password -refreshToken");
 
-    // console.log("3. USER FOUND IN DATABASE:", user);
+    console.log("3. USER FOUND IN DATABASE:", user);
 
     if (!user) {
       console.log("-> REJECTED: User ID from token not found in database.");
