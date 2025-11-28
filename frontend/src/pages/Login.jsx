@@ -33,6 +33,8 @@ const Login = ({ onLoginSuccess }) => {
   const googleLogin = () => {
     
     window.location.href = `${backendUrl}/api/v1/user/auth/google`;
+    console.log("Redirecting to Google OAuth...");
+    console.log("redirect URL:", `${backendUrl}/api/v1/user/auth/google`);
   };
   
 
