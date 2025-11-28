@@ -1,0 +1,23 @@
+This approach will use a JSON Web Token (JWT). The flow is:
+
+React: User clicks "Login with Google".
+
+React -> Backend: The click is a simple link to a backend route (e.g., /auth/google).
+
+Backend -> Google: Passport redirects the user to Google's consent screen.
+
+Google -> Backend: Google redirects the user back to your server's callback route (/auth/google/callback) with a code.
+
+Backend: Passport exchanges the code for the user's profile. It then finds or creates this user in your MongoDB database.
+
+Backend: You create a JWT (JSON Web Token) for that user.
+
+Backend -> React: The backend redirects the user back to your React app (e.g., /login-success) and includes the JWT in a URL query parameter.
+
+React: A special component in your React app grabs the token from the URL, saves it to localStorage, and redirects the user to their dashboard.
+
+
+
+
+
+1. we update the usermodel to store add google id and dont forget to update the presave , as we would not have a password in this case 

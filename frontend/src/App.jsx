@@ -11,6 +11,8 @@ import AddPlace from "./pages/AddPlace";
 import ProtectedRoute from "./components/ProtectedRoute";
 import ToPlaces from "./pages/ToPlace";
 import PlaceDetails from "./pages/PlaceDetails";
+import LoginSuccess from "./components/LoginSuccess";
+import LoginFailed from "./components/LoginFailed";
 
 function App() {
   // 1. Manage login state here, in the top-level component.
@@ -39,9 +41,17 @@ function App() {
     setIsLoggedIn(true);
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+  try {
+    // Call a backend route to clear the cookie
+    await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/v1/user/logout`, {}, {
+      withCredentials: true
+    });
     setIsLoggedIn(false);
-  };
+  } catch (error) {
+    console.error("Logout failed", error);
+  }
+};
 
   if (isCheckingAuth) {
     return <div className="flex justify-center items-center h-screen">Loading...</div>;
@@ -60,6 +70,11 @@ function App() {
           <Route path="/register" element={<Register onLoginSuccess={handleLogin} />} />
           <Route path="/location/:locationSlug/:placeSlug" element={<PlaceDetails />} />
           <Route path="/location/:locationSlug" element={<ToPlaces />} />
+
+
+          {/* google auth */}
+
+    
 
           {/* 6. Protected pages now use the reliable isLoggedIn state */}
           <Route

@@ -1,4 +1,6 @@
+    npx cypress open
 
+...................................
 cy.contains('...') (The "Finder")
 This command's only job is to find an element in the HTML. It scans the entire document (even hidden parts) for the text "Please select a valid image file".
 

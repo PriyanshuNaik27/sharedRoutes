@@ -6,20 +6,27 @@ const userSchema= new mongoose.Schema(
        userName: {
         type:String,
         required:true,
-        lowercase:true
+        lowercase:true,
+        trim: true,
        },
        email : {
         type:String,
         required:true,
         unique:true,
-        lowercase:true
+        lowercase:true,
+        trim: true
        },
        password:{
-        required:true,
         type:String,
        },
        refreshToken:{
         type:String,
+       },
+       googleId:{
+        type:String,
+         unique:true,
+         trim: true,
+         sparse : true
        }
 
     }
@@ -29,6 +36,11 @@ const userSchema= new mongoose.Schema(
  //hash the password before saving and before saving check if the passwrod is modified or not;
 userSchema.pre("save", async function(next){
    if(!this.isModified("password")){
+      return next();
+   }
+
+   // for google auth users password will be undefined so we should not hash undefined password
+   if(!this.password){
       return next();
    }
    try{
