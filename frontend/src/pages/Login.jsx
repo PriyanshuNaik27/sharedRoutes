@@ -71,7 +71,7 @@ const Login = ({ onLoginSuccess }) => {
         <div className="flex flex-col items-center gap-4 p-6 ">
           <button
             onClick={googleLogin}
-            className="px-6 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-md shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 transition-colors"
+            className="px-6 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-md shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-blue-600 transition-colors"
           >
             Log in with Google
           </button>
