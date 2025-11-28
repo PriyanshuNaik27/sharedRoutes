@@ -1,6 +1,7 @@
 import { Router } from "express";
 import passport, { Passport } from "passport";
 import jwt from "jsonwebtoken";
+const Frontend_URL = process.env.FRONTEND_URL || "http://localhost:5173";
 
 
 const router = Router();
@@ -25,7 +26,7 @@ router.get(
 
     // 3. Redirect to Frontend (No token in URL!)
     // Just send them to a success page or straight home
-    res.redirect("http://localhost:5173"); 
+    res.redirect(Frontend_URL); 
   }
 );
 export default router;
