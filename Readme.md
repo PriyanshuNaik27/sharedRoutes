@@ -1,13 +1,13 @@
 # SharedRoutes
 
 A fullstack web application for sharing travel locations and experiences, built with **React (Vite) frontend** and an **Express/MongoDB backend**.  
-Includes modern authentication with JWT and secure HTTP-only cookies, user reviews, image upload (Cloudinary), and more.
+Includes modern authentication with JWT and secure HTTP-only cookies, user reviews, image upload (Cloudinary), Google auth and more.
 
 ---
 
 ## Features
 
-- **User Authentication:** Register/Login with password, JWT tokens stored as secure cookies.
+- **User Authentication:** Register/Login with password, JWT tokens stored as secure cookies , also included Google auth.
 - **Locations & Places:** Add, view, and review travel locations and places.
 - **Image Upload:** Upload location images, stored securely via Cloudinary.
 - **Protected Routes:** Backend routes protected by JWT/cookie-based authentication.
